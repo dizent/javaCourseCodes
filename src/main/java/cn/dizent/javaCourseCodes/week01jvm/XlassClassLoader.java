@@ -1,4 +1,4 @@
-package week01jvm;
+package cn.dizent.javaCourseCodes.week01jvm;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
