@@ -16,24 +16,25 @@ public class InboundHandler extends ChannelInboundHandlerAdapter {
 
     HttpOutboundServer outboundServer;
 
+    private NettyRequestFilter requestFilter = new NettyRequestFilter();
+
     public InboundHandler(HttpOutboundServer outboundServer) {
         this.outboundServer = outboundServer;
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("read-complete");
         ctx.flush();
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("msg -> "+msg);
         try {
             FullHttpRequest fullHttpRequest = (FullHttpRequest) msg;
 
-            NettyRequestFilter filter = new NettyRequestFilter();
 
-            outboundServer.handler(fullHttpRequest,ctx,filter);
+            outboundServer.handler(fullHttpRequest,ctx,requestFilter);
 
         }finally {
             ReferenceCountUtil.release(msg);

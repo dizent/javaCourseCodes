@@ -21,10 +21,11 @@ public enum HttpClientRequestService {
      */
     INSTANCE;
 
-    CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
 
     public String httpClientGet(String urlStr){
+
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpGet httpGet = new HttpGet(urlStr);
 

@@ -1,6 +1,7 @@
 package cn.dizent.javaCourseCodes.week03.gateway.filter;
 
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 
 /**

@@ -53,7 +53,7 @@ public class HttpInboundServer {
 
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .handler(new LoggingHandler(LogLevel.DEBUG))
+                    .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new InboundHttpInitializer());
 
             Channel channel = serverBootstrap.bind(port).sync().channel();

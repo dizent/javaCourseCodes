@@ -4,6 +4,7 @@ import cn.dizent.javaCourseCodes.week03.gateway.NamedThreadFactory;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyRequestFilter;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyResponseFilter;
 import cn.dizent.javaCourseCodes.week03.gateway.getData.HttpClientRequestService;
+import cn.dizent.javaCourseCodes.week03.gateway.getData.OkHttpRequestService;
 import cn.dizent.javaCourseCodes.week03.gateway.router.NettyRouter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -23,14 +24,14 @@ import static io.netty.handler.codec.http.HttpHeaderValues.KEEP_ALIVE;
  */
 public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
 
-    private ThreadPoolExecutor executorService;
+    private final ThreadPoolExecutor executorService;
 
     NettyRouter router;
-    NettyResponseFilter filter;
+    NettyResponseFilter responseFilter;
 
-    public HttpOutboundServer(NettyRouter router, NettyResponseFilter filter) {
+    public HttpOutboundServer(NettyRouter router, NettyResponseFilter responseFilter) {
         this.router = router;
-        this.filter = filter;
+        this.responseFilter = responseFilter;
         executorService = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),
                 Runtime.getRuntime().availableProcessors(),
                 1, TimeUnit.SECONDS,
@@ -38,21 +39,21 @@ public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
                 new NamedThreadFactory("nio-d"));
     }
 
-    public void handler(final FullHttpRequest fullHttpRequest, final ChannelHandlerContext ctx,NettyRequestFilter filter) {
+    public void handler(final FullHttpRequest fullHttpRequest, final ChannelHandlerContext ctx,final NettyRequestFilter requestFilter) {
         String url = fullHttpRequest.uri();
 
         final String occurUrl = router.route() + url;
 
-        filter.filter(fullHttpRequest, ctx);
+        requestFilter.filter(fullHttpRequest, ctx);
 
-        executorService.submit(() -> {
-            String result = HttpClientRequestService.INSTANCE.httpClientGet(occurUrl);
-            fetchResult(ctx, fullHttpRequest, result);
-        });
+//        executorService.submit(() -> {
+//            String result = HttpClientRequestService.INSTANCE.httpClientGet(occurUrl);
+//            fetchResult(ctx, fullHttpRequest, result);
+//        });
 
-//        executorService.submit(()->{
-//            String result = OkHttpRequestService.INSTANCE.okHttpGet(occurUrl);
-//            fetchResult(ctx,fullHttpRequest,result);});
+        executorService.submit(()->{
+            String result = OkHttpRequestService.INSTANCE.okHttpGet(occurUrl);
+            fetchResult(ctx,fullHttpRequest,result);});
 
 //        executorService.submit(()->{
 //            NettyHttpClientHandler.INSTANCE.nettyGet(ctx,occurUrl);
@@ -68,10 +69,11 @@ public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
             response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, Unpooled.wrappedBuffer(resultBody.getBytes()));
             response.headers().set("Content-Type", "application/json");
             response.headers().set("Content-Length", response.content().readableBytes());
-            filter.filter(response,ctx);
+            responseFilter.filter(response,ctx);
         } catch (Exception e) {
             System.out.print("" + e.getMessage());
             response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.NO_CONTENT);
+            ctx.close();
         } finally {
             if (fullHttpRequest != null) {
                 if (!HttpUtil.isKeepAlive(fullHttpRequest)) {
@@ -82,7 +84,6 @@ public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
                 }
             }
             ctx.flush();
-            ctx.close();
         }
     }
 }
