@@ -13,6 +13,7 @@ import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 
 import java.util.concurrent.*;
+import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderValues.KEEP_ALIVE;
@@ -32,11 +33,12 @@ public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
     public HttpOutboundServer(NettyRouter router, NettyResponseFilter responseFilter) {
         this.router = router;
         this.responseFilter = responseFilter;
-        executorService = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),
-                Runtime.getRuntime().availableProcessors(),
+        executorService = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors() * 2,
+                Runtime.getRuntime().availableProcessors() * 2 + 1,
                 1, TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(2048),
-                new NamedThreadFactory("nio-d"));
+                new ArrayBlockingQueue<>(500),
+                new NamedThreadFactory("nio-d"),
+                new ThreadPoolExecutor.AbortPolicy());
     }
 
     public void handler(final FullHttpRequest fullHttpRequest, final ChannelHandlerContext ctx,final NettyRequestFilter requestFilter) {
