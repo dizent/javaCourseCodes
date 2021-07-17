@@ -1,10 +1,6 @@
 package cn.dizent.javaCourseCodes.week04juc.thread;
 
-import cn.dizent.javaCourseCodes.week04juc.thread.Solution01.MyThread;
-
-import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 
 /**
