@@ -3,7 +3,6 @@ package cn.dizent.javaCourseCodes.week03.gateway.outbound;
 import cn.dizent.javaCourseCodes.week03.gateway.NamedThreadFactory;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyRequestFilter;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyResponseFilter;
-import cn.dizent.javaCourseCodes.week03.gateway.getData.HttpClientRequestService;
 import cn.dizent.javaCourseCodes.week03.gateway.getData.OkHttpRequestService;
 import cn.dizent.javaCourseCodes.week03.gateway.router.NettyRouter;
 import io.netty.buffer.Unpooled;
@@ -12,8 +11,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.handler.codec.http.*;
 
-import java.util.concurrent.*;
-import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpHeaderNames.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaderValues.KEEP_ALIVE;
