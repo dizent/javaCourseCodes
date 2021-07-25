@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.dizent.springcorestarter.school_starter.SpringBootConfiguration

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="student2001" class="cn.dizent.spring.model.Student">
+        <property name="id" value="2001" />
+        <property name="name" value="bugu2001"/>
+    </bean>
+
+    <bean id="student2002" class="cn.dizent.spring.model.Student">
+        <constructor-arg name="id" value="2002" />
+        <constructor-arg name="name" value="bugu2002" />
+    </bean>
+
+    <bean id="class201" class="cn.dizent.spring.model.Klass">
+        <property name="classNo" value="klass201"/>
+        <property name="studentList">
+            <list>
+                <ref bean="student2001"/>
+                <ref bean="student2002"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="school21" class="cn.dizent.spring.model.School">
+        <property name="name" value="school21"/>
+        <property name="klass" ref="class201"/>
+        <property name="student" ref="student2001"/>
+    </bean>
+
+
+    <context:component-scan base-package="cn.dizent.spring.service" />
+
+    <bean id="aop1" class="cn.dizent.spring.aop.StudentAop" />
+
+    <aop:aspectj-autoproxy  />
+
+    <aop:config>
+        <aop:pointcut id="p1" expression="execution(* cn.dizent.spring.aop.*.*(..))"/>
+        <aop:aspect ref="aop1"> <!--切面 -->
+            <aop:around method="around" pointcut-ref="p1" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>
