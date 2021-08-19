@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dizent.week08xa.mapper.xadb.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.dizent.week08xa.entity.Order">
+        <id column="order_id" property="orderId" />
+        <result column="user_id" property="userId" />
+        <result column="product_id" property="productId" />
+        <result column="create_at" property="createAt" />
+        <result column="update_at" property="updateAt" />
+    </resultMap>
+
+    <insert id="addNewOrder" parameterType="java.util.Map" useGeneratedKeys="true">
+        insert into t_order(user_id,product_id) values(
+        #{entity.userId},#{entity.productId}
+        )
+    </insert>
+
+    <select id="getOrderById" resultMap="BaseResultMap">
+        select * from t_order where order_id = #{orderId}
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    datasource0:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3316/datasource0?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+      username: root
+      password: 123456
+    datasource1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3316/datasource1?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true
+      username: root
+      password: 123456
+server:
+  port: 8008
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

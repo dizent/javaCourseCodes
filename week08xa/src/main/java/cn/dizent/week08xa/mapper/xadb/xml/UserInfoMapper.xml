@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.dizent.week08xa.mapper.xadb.UserInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.dizent.week08xa.entity.UserInfo">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="gender" property="gender"/>
+        <result column="create_at" property="createAt"/>
+        <result column="update_at" property="updateAt"/>
+    </resultMap>
+
+    <insert id="addNewUser" parameterType="java.util.Map" useGeneratedKeys="true">
+            insert into t_user_info(user_name,gender) values(#{entity.userName},#{entity.gender});
+    </insert>
+
+
+</mapper>
