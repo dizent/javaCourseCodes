@@ -13,6 +13,6 @@ import java.math.BigDecimal;
 public class OrderServiceImpl implements IOrderService {
     @Override
     public Order findOrderById(int orderId) {
-        return new Order(1,"mock order info", BigDecimal.valueOf(999.99));
+        return new Order(orderId,"mock order info id = " + orderId, BigDecimal.valueOf(999.99));
     }
 }

@@ -1,6 +1,5 @@
 package cn.dizent.javaCourseCodes.week03.gateway.inbound;
 
-import cn.dizent.javaCourseCodes.week03.gateway.getData.NettyHttpClientHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
@@ -12,8 +11,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @Auther: 布谷

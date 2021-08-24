@@ -9,8 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>week09rpc</module>
-        <module>rpcfx-demo-common</module>
+        <module>week05spring</module>
     </modules>
 
     <dependencies>

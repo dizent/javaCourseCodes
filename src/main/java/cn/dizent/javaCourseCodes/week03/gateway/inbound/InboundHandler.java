@@ -24,7 +24,6 @@ public class InboundHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("read-complete");
         ctx.flush();
     }
 

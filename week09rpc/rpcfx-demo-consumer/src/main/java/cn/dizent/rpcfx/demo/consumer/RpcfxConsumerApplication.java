@@ -19,6 +19,8 @@ public class RpcfxConsumerApplication {
         IOrderService orderService = Rpcfx.create(IOrderService.class,"http://localhost:9001");
         Order order = orderService.findOrderById(1);
         System.out.println("find user id=1 from server: " + order.getInfo());
+        Order order2 = orderService.findOrderById(2);
+        System.out.println("find user id=1 from server: " + order2.getInfo());
 
 //        SpringApplication.run(RpcfxConsumerApplication.class,args);
     }

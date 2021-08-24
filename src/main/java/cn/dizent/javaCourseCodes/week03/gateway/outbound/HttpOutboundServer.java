@@ -3,7 +3,7 @@ package cn.dizent.javaCourseCodes.week03.gateway.outbound;
 import cn.dizent.javaCourseCodes.week03.gateway.NamedThreadFactory;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyRequestFilter;
 import cn.dizent.javaCourseCodes.week03.gateway.filter.NettyResponseFilter;
-import cn.dizent.javaCourseCodes.week03.gateway.getData.OkHttpRequestService;
+import cn.dizent.javaCourseCodes.week03.gateway.getData.netty.NettyHttpService;
 import cn.dizent.javaCourseCodes.week03.gateway.router.NettyRouter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -53,14 +53,14 @@ public class HttpOutboundServer extends ChannelOutboundHandlerAdapter {
 //            fetchResult(ctx, fullHttpRequest, result);
 //        });
 
-        executorService.submit(()->{
-            String result = OkHttpRequestService.INSTANCE.okHttpGet(occurUrl);
-            fetchResult(ctx,fullHttpRequest,result);});
-
 //        executorService.submit(()->{
-//            NettyHttpClientHandler.INSTANCE.nettyGet(ctx,occurUrl);
+//            String result = OkHttpRequestService.INSTANCE.okHttpGet(occurUrl);
+//            fetchResult(ctx,fullHttpRequest,result);});
+
+        executorService.submit(()->{
+            NettyHttpService.start("127.0.0.1",8802);
 //            fetchResult(ctx,fullHttpRequest,result);
-//            });
+            });
 
     }
 
