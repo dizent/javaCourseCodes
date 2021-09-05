@@ -1,0 +1,14 @@
+server:
+  port: 1101
+spring:
+  redis:
+    host: 127.0.0.1
+    database: 11
+    timeout: 50000
+    client-type: lettuce
+    lettuce:
+      pool:
+        max-active: 16
+        max-wait: 10ms
+  cache:
+    type: redis

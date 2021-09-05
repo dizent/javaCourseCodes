@@ -1,5 +1,6 @@
 package cn.dizent.rpcfx.demo.common;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
  * @Date: 2021/8/22 21:04
  * @Description:
  */
-public class Order {
+public class Order implements Serializable {
 
     private int orderId;
 
