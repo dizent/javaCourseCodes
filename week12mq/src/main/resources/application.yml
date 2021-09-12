@@ -1,0 +1,11 @@
+server:
+  port: 1201
+spring:
+  activemq:
+    user: admin
+    password: admin
+    broker-url: tcp://127.0.0.1:61616
+    pool:
+      enabled: true
+      max-connections: 100
+    in-memory: true

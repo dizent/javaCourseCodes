@@ -10,6 +10,7 @@
     <version>1.0</version>
     <modules>
         <module>week05spring</module>
+        <module>week12mq</module>
     </modules>
 
     <dependencies>
